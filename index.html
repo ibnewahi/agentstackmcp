@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgentStackMCP.com — The MCP Infrastructure Brand</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --v:#7B2FFF;--v2:#A855F7;--v3:#C084FC;--v4:#1A0A2E;
+  --vg:linear-gradient(135deg,#7B2FFF,#A855F7);
+  --bg:#08050F;--bg2:#0F0A1A;--bg3:#150E22;
+  --b:rgba(123,47,255,.2);--bs:rgba(123,47,255,.07);
+  --t:#F0ECFF;--tm:#9D8FBF;--td:#3D3060;
+  --gr:#22C55E;--re:#EF4444;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--t);font-family:'Space Grotesk',sans-serif;overflow-x:hidden;}
+
+/* Animated grid */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(123,47,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(123,47,255,.06) 1px,transparent 1px);
+  background-size:40px 40px;
+  animation:gridMove 20s linear infinite;
+}
+@keyframes gridMove{from{background-position:0 0;}to{background-position:40px 40px;}}
+
+/* Glow orb */
+.orb{position:fixed;width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(123,47,255,.15) 0%,transparent 70%);
+  top:-100px;right:-100px;pointer-events:none;z-index:0;
+  animation:orbPulse 4s ease-in-out infinite alternate;
+}
+@keyframes orbPulse{from{transform:scale(1);opacity:.6;}to{transform:scale(1.15);opacity:1;}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 48px;
+  background:rgba(8,5,15,.8);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--b);
+}
+.nlogo{font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--v3);letter-spacing:1px;}
+.nlogo span{color:var(--td);}
+.ncta{padding:8px 20px;background:var(--vg);color:#fff;
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:2px;text-transform:uppercase;border:none;
+  cursor:pointer;text-decoration:none;
+  clip-path:polygon(8px 0%,100% 0%,100% calc(100% - 8px),calc(100% - 8px) 100%,0% 100%,0% 8px);
+  transition:opacity .2s;
+}
+.ncta:hover{opacity:.85;}
+
+/* HERO */
+.hero{position:relative;z-index:1;min-height:100vh;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:140px 48px 80px;max-width:1200px;margin:0 auto;
+}
+.hero-label{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:4px;color:var(--v2);text-transform:uppercase;
+  margin-bottom:20px;display:flex;align-items:center;gap:12px;
+  opacity:0;animation:up .6s .1s forwards;
+}
+.hero-label::before{content:'';width:24px;height:1px;background:var(--v2);}
+.blink-dot{width:6px;height:6px;border-radius:50%;background:var(--gr);
+  display:inline-block;animation:blink 1s step-end infinite;margin-left:4px;
+}
+.hero-h1{
+  font-size:clamp(44px,8vw,100px);font-weight:700;line-height:.95;
+  letter-spacing:-3px;
+  opacity:0;animation:up .7s .25s forwards;
+}
+.hero-h1 .hl{
+  background:var(--vg);-webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;background-clip:text;
+  display:block;
+}
+.hero-h1 .outline{
+  -webkit-text-stroke:1px rgba(168,85,247,.4);
+  -webkit-text-fill-color:transparent;
+  display:block;
+}
+.hero-sub{
+  max-width:540px;margin-top:28px;font-size:16px;
+  line-height:1.75;color:var(--tm);font-weight:300;
+  opacity:0;animation:up .7s .4s forwards;
+}
+.hero-chips{
+  display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;
+  opacity:0;animation:up .6s .52s forwards;
+}
+.chip{
+  padding:5px 14px;border:1px solid var(--b);
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:1px;color:var(--v3);
+  background:var(--bs);
+  clip-path:polygon(6px 0%,100% 0%,100% calc(100% - 6px),calc(100% - 6px) 100%,0% 100%,0% 6px);
+}
+.hero-actions{display:flex;gap:14px;margin-top:36px;flex-wrap:wrap;
+  opacity:0;animation:up .6s .64s forwards;
+}
+.btn-pri{
+  padding:14px 32px;background:var(--vg);color:#fff;
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;
+  text-decoration:none;
+  clip-path:polygon(10px 0%,100% 0%,100% calc(100% - 10px),calc(100% - 10px) 100%,0% 100%,0% 10px);
+  transition:opacity .2s;display:inline-block;
+}
+.btn-pri:hover{opacity:.85;}
+.btn-sec{
+  padding:14px 32px;background:transparent;color:var(--tm);
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  letter-spacing:2px;text-transform:uppercase;border:1px solid var(--b);
+  cursor:pointer;text-decoration:none;display:inline-block;
+  transition:all .2s;
+}
+.btn-sec:hover{border-color:var(--v);color:var(--v3);}
+
+/* STATS BAR */
+.stats-bar{
+  position:relative;z-index:1;
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border-top:1px solid var(--b);border-bottom:1px solid var(--b);
+  background:var(--bg2);
+}
+.sb{padding:28px 36px;border-right:1px solid var(--b);}
+.sb:last-child{border-right:none;}
+.sb-num{font-size:32px;font-weight:700;
+  background:var(--vg);-webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1;
+}
+.sb-label{font-family:'JetBrains Mono',monospace;font-size:9px;
+  letter-spacing:2px;text-transform:uppercase;color:var(--td);margin-top:6px;}
+
+/* TICKER */
+.ticker{position:relative;z-index:1;
+  background:var(--v4);border-bottom:1px solid var(--b);
+  padding:10px 0;overflow:hidden;
+}
+.t-track{display:flex;gap:48px;width:max-content;animation:scroll 18s linear infinite;}
+.ti{display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:10px;white-space:nowrap;}
+.ti-l{color:var(--td);}
+.ti-v{color:var(--v3);}
+.ti-v.up{color:var(--gr);}
+.ti-sep{width:3px;height:3px;border-radius:50%;background:var(--b);}
+
+/* SECTIONS */
+.section{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:88px 48px;}
+.s-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:4px;
+  color:var(--td);text-transform:uppercase;margin-bottom:14px;}
+.s-h{font-size:clamp(28px,4vw,48px);font-weight:700;line-height:1.1;letter-spacing:-1px;}
+.s-h em{font-style:normal;background:var(--vg);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+/* CODE TERMINAL */
+.terminal{
+  background:#04020A;border:1px solid var(--b);margin-top:40px;
+  box-shadow:0 0 60px rgba(123,47,255,.1);
+}
+.t-bar{background:#0A0615;padding:10px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--b);}
+.td-dot{width:10px;height:10px;border-radius:50%;}
+.t-body{padding:24px;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:2.1;overflow-x:auto;}
+.tc{color:var(--v3);}
+.tw{color:var(--t);}
+.tdd{color:var(--td);}
+.tg{color:var(--gr);}
+.tr{color:var(--re);}
+.ty{color:#F59E0B;}
+.tblink{animation:blink 1s step-end infinite;}
+
+/* WHY GRID */
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:var(--b);margin-top:48px;border:1px solid var(--b);}
+.wc{background:var(--bg);padding:32px 28px;transition:background .2s;
+  border-top:2px solid transparent;transition:all .2s;
+}
+.wc:hover{background:var(--bg3);border-top-color:var(--v);}
+.wc-icon{font-size:24px;margin-bottom:14px;}
+.wc-title{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;
+  text-transform:uppercase;color:var(--v3);margin-bottom:8px;}
+.wc-desc{font-size:13px;line-height:1.75;color:var(--tm);}
+
+/* BUYERS */
+.buyer-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;
+  background:var(--b);margin-top:40px;border:1px solid var(--b);}
+.bc{background:var(--bg2);padding:32px;transition:background .2s;}
+.bc:hover{background:var(--bg3);}
+.bc-num{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--v);margin-bottom:12px;}
+.bc-title{font-size:18px;font-weight:600;margin-bottom:8px;}
+.bc-desc{font-size:13px;line-height:1.75;color:var(--tm);}
+.bc-tag{display:inline-block;margin-top:12px;padding:3px 10px;
+  background:rgba(123,47,255,.12);border:1px solid var(--b);
+  font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--v3);}
+
+/* ACQUIRE */
+.acquire{position:relative;z-index:1;
+  background:linear-gradient(135deg,var(--v4),var(--bg));
+  border-top:1px solid var(--b);
+}
+.acq-inner{max-width:1200px;margin:0 auto;padding:88px 48px;
+  display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
+.price-box{
+  border:1px solid var(--b);
+  background:rgba(123,47,255,.06);
+  padding:44px;
+  position:relative;overflow:hidden;
+}
+.price-box::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--vg);
+}
+.pb-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--td);text-transform:uppercase;margin-bottom:10px;}
+.pb-price{font-size:56px;font-weight:700;
+  background:var(--vg);-webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;background-clip:text;
+  letter-spacing:-2px;line-height:1;
+}
+.pb-sub{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--td);margin-top:4px;margin-bottom:28px;}
+.pb-div{height:1px;background:var(--b);margin:20px 0;}
+.pb-feat{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--tm);line-height:1.6;margin-bottom:10px;}
+.pb-feat::before{content:'→';color:var(--v3);font-family:'JetBrains Mono',monospace;flex-shrink:0;}
+
+footer{position:relative;z-index:1;border-top:1px solid var(--b);
+  padding:20px 48px;display:flex;justify-content:space-between;align-items:center;
+  font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--td);
+  letter-spacing:1px;flex-wrap:wrap;gap:10px;}
+
+@keyframes up{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+@keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+@media(max-width:800px){
+  nav{padding:14px 20px;}
+  .hero{padding:110px 20px 60px;}
+  .stats-bar{grid-template-columns:repeat(2,1fr);}
+  .section{padding:60px 20px;}
+  .why-grid,.buyer-grid{grid-template-columns:1fr;}
+  .acq-inner{grid-template-columns:1fr;}
+  footer{padding:16px 20px;flex-direction:column;text-align:center;}
+}
+</style>
+</head>
+<body>
+<div class="orb"></div>
+
+<nav>
+  <div class="nlogo">AgentStack<span>MCP</span>.com</div>
+  <a href="#acquire" class="ncta">Acquire Domain</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-label">🚀 Elite Domain · MCP Ecosystem <span class="blink-dot"></span></div>
+  <h1 class="hero-h1">
+    <span class="outline">The Stack</span>
+    <span class="hl">That Runs</span>
+    <span>Agents.</span>
+  </h1>
+  <p class="hero-sub">AgentStackMCP.com is the category-defining brand for the Model Context Protocol era — the fastest-growing infrastructure standard in AI history. The name nobody else owns. The moment nobody can repeat.</p>
+  <div class="hero-chips">
+    <span class="chip">MCP Infrastructure</span>
+    <span class="chip">Agent Tooling</span>
+    <span class="chip">Developer Platform</span>
+    <span class="chip">AI Stack</span>
+  </div>
+  <div class="hero-actions">
+    <a href="#acquire" class="btn-pri">Acquire for $8,500</a>
+    <a href="#why" class="btn-sec">See the Market →</a>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="sb"><div class="sb-num">8M+</div><div class="sb-label">MCP Downloads<br>in 5 months</div></div>
+  <div class="sb"><div class="sb-num">34.6%</div><div class="sb-label">Market CAGR<br>projected</div></div>
+  <div class="sb"><div class="sb-num">$10.3B</div><div class="sb-label">MCP Ecosystem<br>projection</div></div>
+  <div class="sb"><div class="sb-num">0</div><div class="sb-label">Brands owning<br>this exact niche</div></div>
+</div>
+
+<div class="ticker">
+  <div class="t-track">
+    <div class="ti"><span class="ti-l">MCP DOWNLOADS</span><span class="ti-v up">100K → 8M in 5 months</span><div class="ti-sep"></div></div>
+    <div class="ti"><span class="ti-l">AFTERNIC "AGENT" KEYWORD</span><span class="ti-v up">Top 10 Jan 2026</span><div class="ti-sep"></div></div>
+    <div class="ti"><span class="ti-l">AI DEV TOOLS MARKET</span><span class="ti-v up">$7.38B · CAGR 28%</span><div class="ti-sep"></div></div>
+    <div class="ti"><span class="ti-l">MCP ECOSYSTEM</span><span class="ti-v up">$10.3B projected</span><div class="ti-sep"></div></div>
+    <div class="ti"><span class="ti-l">COMPARABLE SALE — PrivateLLM.com</span><span class="ti-v up">$250,000</span><div class="ti-sep"></div></div>
+    <div class="ti"><span class="ti-l">MCP DOWNLOADS</span><span class="ti-v up">100K → 8M in 5 months</span><div class="ti-sep"></div></div>
+    <div class="ti"><span class="ti-l">AFTERNIC "AGENT" KEYWORD</span><span class="ti-v up">Top 10 Jan 2026</span><div class="ti-sep"></div></div>
+    <div class="ti"><span class="ti-l">AI DEV TOOLS MARKET</span><span class="ti-v up">$7.38B · CAGR 28%</span><div class="ti-sep"></div></div>
+    <div class="ti"><span class="ti-l">MCP ECOSYSTEM</span><span class="ti-v up">$10.3B projected</span><div class="ti-sep"></div></div>
+    <div class="ti"><span class="ti-l">COMPARABLE SALE — PrivateLLM.com</span><span class="ti-v up">$250,000</span><div class="ti-sep"></div></div>
+  </div>
+</div>
+
+<section id="why" class="section">
+  <div class="s-tag">// Why This Domain</div>
+  <h2 class="s-h">MCP is the new TCP/IP.<br><em>This is its brand.</em></h2>
+
+  <div class="terminal">
+    <div class="t-bar">
+      <div class="td-dot" style="background:#FF5F57;"></div>
+      <div class="td-dot" style="background:#FEBC2E;"></div>
+      <div class="td-dot" style="background:#28C840;"></div>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--td);margin-left:8px;">agentstackmcp — ecosystem dashboard</span>
+    </div>
+    <div class="t-body">
+      <div><span class="tdd">$ </span><span class="tc">mcp</span><span class="tw"> stack --audit --scope enterprise</span></div>
+      <div class="tdd">Scanning registered MCP servers...</div>
+      <div class="tg">✓ 2,847 active MCP servers detected globally</div>
+      <div>&nbsp;</div>
+      <div><span class="ty">PROTOCOL</span><span class="tdd">   Model Context Protocol v2.1</span></div>
+      <div><span class="ty">ADOPTION</span><span class="tdd">    Enterprise: </span><span class="tg">↑ 340% QoQ</span></div>
+      <div><span class="ty">TOP USES</span><span class="tdd">    Code gen · Data pipelines · Agent orchestration</span></div>
+      <div>&nbsp;</div>
+      <div><span class="tdd">📦 Stack components registered:</span></div>
+      <div><span class="tdd">   </span><span class="tg">✓</span><span class="tdd"> MCP Server  </span><span class="tg">✓</span><span class="tdd"> Agent Router  </span><span class="tg">✓</span><span class="tdd"> Tool Registry</span></div>
+      <div><span class="tdd">   </span><span class="tg">✓</span><span class="tdd"> Auth Layer  </span><span class="tg">✓</span><span class="tdd"> Cost Monitor  </span><span class="tg">✓</span><span class="tdd"> Audit Trail</span></div>
+      <div>&nbsp;</div>
+      <div><span class="tc">BRAND STATUS: </span><span class="tw">AgentStackMCP.com — </span><span class="ty">Available for acquisition</span></div>
+      <div><span class="tdd">$ </span><span class="tblink" style="color:var(--v3);">_</span></div>
+    </div>
+  </div>
+
+  <div class="why-grid" style="margin-top:48px;">
+    <div class="wc">
+      <div class="wc-icon">⚡</div>
+      <div class="wc-title">Fastest Growing Protocol</div>
+      <div class="wc-desc">MCP went from 100,000 to 8 million downloads in just 5 months — growth that rivals early HTTP adoption. Every AI company is building on it right now.</div>
+    </div>
+    <div class="wc">
+      <div class="wc-icon">🔑</div>
+      <div class="wc-title">3 Keywords, 1 Domain</div>
+      <div class="wc-desc">"Agent" + "Stack" + "MCP" — three of Afternic's hottest AI keywords combined into one authoritative, developer-grade brand. Impossible to replicate.</div>
+    </div>
+    <div class="wc">
+      <div class="wc-icon">🌐</div>
+      <div class="wc-title">Platform-Ready Brand</div>
+      <div class="wc-desc">Instantly works as a marketplace, developer hub, security tool, or infrastructure vendor. The name signals technical authority on first read.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="border-top:1px solid var(--bs);padding-top:0;">
+  <div class="s-tag">// Ideal Acquirers</div>
+  <h2 class="s-h">Who pays <em>top dollar</em><br>for this domain.</h2>
+  <div class="buyer-grid">
+    <div class="bc">
+      <div class="bc-num">01 ——</div>
+      <div class="bc-title">MCP Tooling Startups</div>
+      <div class="bc-desc">Companies building MCP server marketplaces, registries, or security layers need a brand that instantly communicates authority to developer audiences.</div>
+      <div class="bc-tag">Highest probability buyer</div>
+    </div>
+    <div class="bc">
+      <div class="bc-num">02 ——</div>
+      <div class="bc-title">AI Developer Platforms</div>
+      <div class="bc-desc">Companies like Cursor, Smithery, or any IDE/agent orchestration tool expanding their MCP integration would use this as a product line or campaign brand.</div>
+      <div class="bc-tag">Enterprise budget</div>
+    </div>
+    <div class="bc">
+      <div class="bc-num">03 ——</div>
+      <div class="bc-title">Infrastructure Vendors</div>
+      <div class="bc-desc">AWS, Cloudflare, or Vercel entering the MCP infrastructure space would acquire this domain to anchor their developer branding.</div>
+      <div class="bc-tag">Highest ceiling price</div>
+    </div>
+    <div class="bc">
+      <div class="bc-num">04 ——</div>
+      <div class="bc-title">VC-Backed AI Founders</div>
+      <div class="bc-desc">Founders raising Series A/B in the MCP ecosystem need a .com that signals market leadership. Investors expect premium domain names at this stage.</div>
+      <div class="bc-tag">Fast decision makers</div>
+    </div>
+  </div>
+</section>
+
+<section id="acquire" class="acquire">
+  <div class="acq-inner">
+    <div>
+      <div class="s-tag">// Acquisition</div>
+      <h2 class="s-h" style="font-size:clamp(24px,3.5vw,42px);">Own the MCP brand<br><em>before the wave peaks.</em></h2>
+      <p style="margin-top:20px;font-size:14px;line-height:1.85;color:var(--tm);">The window for owning category-defining MCP infrastructure brands is measured in months, not years. Every week that passes is another week a funded startup could register a similar name and outspend you on SEO.</p>
+      <p style="margin-top:14px;font-size:13px;line-height:1.75;color:var(--td);font-family:'JetBrains Mono',monospace;">Listed on Afternic. Direct transfer within 24 hours. Escrow.com protected. Bundle pricing available with other domains in this portfolio.</p>
+    </div>
+    <div class="price-box">
+      <div class="pb-label">Buy It Now Price</div>
+      <div class="pb-price">$8,500</div>
+      <div class="pb-sub">Floor: $3,500 · Ceiling: $18,000</div>
+      <div class="pb-div"></div>
+      <div class="pb-feat">Immediate .com transfer on payment</div>
+      <div class="pb-feat">Escrow.com transaction protection</div>
+      <div class="pb-feat">Afternic Fast Transfer network</div>
+      <div class="pb-feat">Lease-to-Own available</div>
+      <div class="pb-div"></div>
+      <a href="mailto:nasmisbah@gmail.com?subject=Acquisition Inquiry: AgentStackMCP.com" class="btn-pri" style="display:block;text-align:center;">Send Acquisition Inquiry</a>
+      <a href="https://www.afternic.com" target="_blank" class="btn-sec" style="display:block;text-align:center;margin-top:10px;">View on Afternic →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>AgentStackMCP.com · Premium AI Domain</div>
+  <div>Listed on Afternic · Escrow Protected · Fast Transfer</div>
+  <div>© 2026 · Part of AI Domain Portfolio</div>
+</footer>
+</body>
+</html>
